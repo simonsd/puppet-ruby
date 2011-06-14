@@ -6,4 +6,10 @@ class ruby::repo {
 			gpgcheck=>1,
 			gpgkey=> "http://centos.karan.org/RPM-GPG-KEY-karan.org.txt",
 	}
+
+	yumrepo { 'epel':
+		baseurl => 'http://be.mirror.eurid.eu/epel',
+		descr => 'epel',
+		enabled => 1,
+	}
 }
