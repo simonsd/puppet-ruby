@@ -24,7 +24,7 @@ class ruby::packages {
 			Debian => 'rubygems',
 		},
 		require => $operatingsystem ? {
-			Centos => [ Package['ruby'], Exec['epel'] ],
+			Centos => [ Package['ruby'], Yumrepo['epel'] ],
 			Debian => Package['ruby'],
 		},
 	}
