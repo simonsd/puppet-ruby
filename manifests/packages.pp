@@ -8,7 +8,7 @@ class ruby::packages {
 	}
 
 
-	package { rubydev:
+	package { rubydevel:
 		ensure => installed,
 		name => $operatingsystem ? {
 			Centos => 'ruby-devel',
