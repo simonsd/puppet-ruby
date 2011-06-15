@@ -1,6 +1,9 @@
 class ruby::packages {
 	package { ruby:
-		ensure => installed,
+		ensure => $operatingsystem ? {
+			Centos => "latest",
+			Debian => "1.8.7",
+		},
 		name => $operatingsystem ? {
 			Centos => 'ruby',
 			Debian => 'ruby',
