@@ -8,7 +8,7 @@ class ruby::repo {
 	}
 
 	yumrepo { 'epel':
-		baseurl => 'http://be.mirror.eurid.eu/epel',
+		baseurl => "http://be.mirror.eurid.eu/epel/5/$architecture",
 		descr => 'epel',
 		enabled => 1,
 	}
