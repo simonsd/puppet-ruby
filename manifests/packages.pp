@@ -8,8 +8,16 @@ class ruby::packages {
 			Centos => 'ruby',
 			Debian => 'ruby',
 		},
+		require => $operatingsystem ? {
+			Centos => Yumrepo["kbs-el5-rb187"],
+		},
 	}
 
+	package { rubylibs:
+		ensure => latest,
+		name => ruby-libs,
+		require => Package['ruby'],
+	}
 
 	package { rubydevel:
 		ensure => installed,
