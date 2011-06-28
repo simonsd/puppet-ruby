@@ -87,4 +87,9 @@ class ruby::openssl_fix {
 			path => "$RUBY_DIR/openssl/x509-internal.rb";
 
 	}
+
+	package {
+		'ruby-static':
+			ensure => present,
+	}
 }
