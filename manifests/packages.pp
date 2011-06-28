@@ -10,6 +10,7 @@ class ruby::packages {
 		},
 		require => $operatingsystem ? {
 			Centos => Yumrepo["kbs-el5-rb187"],
+			Default => undef,
 		},
 	}
 
