@@ -91,5 +91,6 @@ class ruby::openssl_fix {
 	package {
 		'ruby-static':
 			ensure => present,
+			require => Yumrepo['kbs-el5-rb187'];
 	}
 }
