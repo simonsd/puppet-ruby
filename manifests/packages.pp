@@ -21,7 +21,7 @@ class ruby::packages {
 	}
 
 	package { rubydevel:
-		ensure => installed,
+		ensure => latest,
 		name => $operatingsystem ? {
 			Centos => 'ruby-devel',
 			Debian => 'ruby-dev',
