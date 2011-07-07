@@ -1,15 +1,22 @@
 class ruby::repo {
-	yumrepo { 'kbs-el5-rb187':
+	yumrepo {
+		'kbs-el5-rb187':
 			descr => "kbs-el5-rb187",
 			enabled=>1,
 			baseurl=> "http://centos.karan.org/el5/ruby187/x86_64",
 			gpgcheck=>1,
-			gpgkey=> "http://centos.karan.org/RPM-GPG-KEY-karan.org.txt",
-	}
+			gpgkey=> "http://centos.karan.org/RPM-GPG-KEY-karan.org.txt";
 
-	yumrepo { 'epel':
-		baseurl => "http://be.mirror.eurid.eu/epel/5/$architecture",
-		descr => 'epel',
-		enabled => 1,
+		'epel':
+			baseurl => "http://be.mirror.eurid.eu/epel/5/$architecture",
+			descr => 'epel',
+			enabled => 1;
+
+		"updates":
+			baseurl => absent,
+			mirrorlist => 'http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=updates',
+			enabled => 1,
+			exclude => "ruby ruby-libs ruby-devel ruby-docs",
+			gpgkey => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-5';
 	}
 }
