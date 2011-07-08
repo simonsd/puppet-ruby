@@ -8,11 +8,6 @@ class ruby::packages {
 				Debian => undef,
 			};
 
-		rubylibs:
-			ensure => latest,
-			name => ruby-libs,
-			require => Package['ruby'];
-
 		rubydevel:
 			ensure => latest,
 			name => $operatingsystem ? {
@@ -28,13 +23,21 @@ class ruby::packages {
 				Centos => [ Package['ruby'], Yumrepo['epel'] ],
 				Debian => Package['ruby'],
 			};
+	}
+
+	@package {
+		rubylibs:
+			ensure => latest,
+			name => 'ruby-libs',
+			require => Package['ruby'];
 
 		rubydocs:
 			ensure => installed,
-			name => $operatingsystem ? {
-				Centos => 'ruby-docs',
-				Debian => undef,
-			},
+			name => 'ruby-docs',
 			require => Package['ruby'];
+	}
+
+	if $operatingsystem == "Centos" {
+		realize(package['rubylibs', 'rubydocs'])
 	}
 }
