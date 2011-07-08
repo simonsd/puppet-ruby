@@ -1,14 +1,14 @@
 class ruby::repo {
-	yumrepo {
+	@yumrepo {
 		'kbs-el5-rb187':
 			descr => "kbs-el5-rb187",
 			enabled=>1,
-			baseurl=> "http://centos.karan.org/el5/ruby187/x86_64",
+			baseurl=> "http://centos.karan.org/el5/ruby187/$hardwaremodel",
 			gpgcheck=>1,
 			gpgkey=> "http://centos.karan.org/RPM-GPG-KEY-karan.org.txt";
 
 		'epel':
-			baseurl => "http://be.mirror.eurid.eu/epel/5/$architecture",
+			baseurl => "http://be.mirror.eurid.eu/epel/5/$hardwaremodel",
 			descr => 'epel',
 			enabled => 1;
 
@@ -16,7 +16,11 @@ class ruby::repo {
 			baseurl => absent,
 			mirrorlist => 'http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=updates',
 			enabled => 1,
-			exclude => "ruby ruby-libs ruby-devel ruby-docs",
+			exclude => "ruby*",
 			gpgkey => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-5';
+	}
+
+	if $operatingsystem == "Centos" {
+		realize(Yumrepo['kbs-el5-rb187', 'epel', 'updates'])
 	}
 }

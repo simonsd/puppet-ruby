@@ -38,6 +38,6 @@ class ruby::packages {
 	}
 
 	if $operatingsystem == "Centos" {
-		realize(package['rubylibs', 'rubydocs'])
+		realize(Package['rubylibs', 'rubydocs'])
 	}
 }
