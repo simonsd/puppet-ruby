@@ -1,52 +1,40 @@
 class ruby::packages {
-	package { ruby:
-		ensure => $operatingsystem ? {
-			Centos => "latest",
-			Debian => "1.8.7",
-		},
-		name => $operatingsystem ? {
-			Centos => 'ruby',
-			Debian => 'ruby',
-		},
-		require => $operatingsystem ? {
-			Centos => Yumrepo["kbs-el5-rb187"],
-			Default => undef,
-		},
-	}
+	package {
+		ruby:
+			ensure => latest,
+			name => 'ruby',
+			require => $operatingsystem ? {
+				Centos => Yumrepo["kbs-el5-rb187"],
+				Debian => undef,
+			};
 
-	package { rubylibs:
-		ensure => latest,
-		name => ruby-libs,
-		require => Package['ruby'],
-	}
+		rubylibs:
+			ensure => latest,
+			name => ruby-libs,
+			require => Package['ruby'];
 
-	package { rubydevel:
-		ensure => latest,
-		name => $operatingsystem ? {
-			Centos => 'ruby-devel',
-			Debian => 'ruby-dev',
-		},
-		require => Package['ruby'],
-	}
+		rubydevel:
+			ensure => latest,
+			name => $operatingsystem ? {
+				Centos => 'ruby-devel',
+				Debian => 'ruby-dev',
+			},
+			require => Package['ruby'];
 
-	package { rubygems:
-		ensure => installed,
-		name => $operatingsystem ? {
-			Centos => 'rubygems',
-			Debian => 'rubygems',
-		},
-		require => $operatingsystem ? {
-			Centos => [ Package['ruby'], Yumrepo['epel'] ],
-			Debian => Package['ruby'],
-		},
-	}
+		rubygems:
+			ensure => installed,
+			name => 'rubygems',
+			require => $operatingsystem ? {
+				Centos => [ Package['ruby'], Yumrepo['epel'] ],
+				Debian => Package['ruby'],
+			};
 
-	package { rubydocs:
-		ensure => installed,
-		name => $operatingsystem ? {
-			Centos => 'ruby-docs',
-			Debian => 'ruby',
-		},
-		require => Package['ruby'],
+		rubydocs:
+			ensure => installed,
+			name => $operatingsystem ? {
+				Centos => 'ruby-docs',
+				Debian => undef,
+			},
+			require => Package['ruby'];
 	}
 }
