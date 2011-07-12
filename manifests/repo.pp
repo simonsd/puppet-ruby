@@ -1,5 +1,5 @@
 class ruby::repo {
-	yumrepo {
+	@yumrepo {
 		'kbs-el5-rb187':
 			descr => "kbs-el5-rb187",
 			enabled=>1,
@@ -18,5 +18,11 @@ class ruby::repo {
 			enabled => 1,
 			exclude => "ruby ruby-libs ruby-devel ruby-docs",
 			gpgkey => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-5';
+	}
+
+	if $operatingsystem == 'Centos' {
+		if $operatingsystemrelease == '6.0' {
+			realize(Yumrepo['kbs-el5-rb187', 'epel', 'updates'])
+		}
 	}
 }
