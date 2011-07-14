@@ -4,7 +4,10 @@ class ruby::packages {
 			ensure => latest,
 			name => 'ruby',
 			require => $operatingsystem ? {
-				Centos => Yumrepo["kbs-el5-rb187"],
+				Centos => $operatingsystemrelease ? {
+					'6.0' => undef,
+					'*' => Yumrepo["kbs-el5-rb187"],
+				},
 				Debian => undef,
 			};
 
@@ -20,7 +23,10 @@ class ruby::packages {
 			ensure => installed,
 			name => 'rubygems',
 			require => $operatingsystem ? {
-				Centos => [ Package['ruby'], Yumrepo['epel'] ],
+				Centos => $operatingsystemrelease ? {
+					'6.0' => Package['ruby'],
+					'*' => [ Package['ruby'], Yumrepo['epel'] ],
+				},
 				Debian => Package['ruby'],
 			};
 	}
