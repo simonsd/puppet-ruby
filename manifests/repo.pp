@@ -8,9 +8,13 @@ class ruby::repo {
 			gpgkey => "http://centos.karan.org/RPM-GPG-KEY-karan.org.txt";
 
 		'epel':
-			baseurl => "http://be.mirror.eurid.eu/epel/5/$hardwaremodel",
-			descr => 'epel',
-			enabled => 1;
+			descr => 'EPEL',
+			enabled => 1,
+			baseurl => $operatingsystemrelease ? {
+				'5.*' => "http://mirror.eurid.eu/epel/6/$hardwaremodel/",
+				'6.0' => "http://mirror.eurid.eu/epel/6/$hardwaremodel/",
+			},
+			gpgcheck => 0;
 
 		"updates":
 			baseurl => absent,
@@ -22,7 +26,8 @@ class ruby::repo {
 
 	if $operatingsystem == 'Centos' {
 		if $operatingsystemrelease != '6.0' {
-			realize(Yumrepo['kbs-el5-rb187', 'epel', 'updates'])
+			realize(Yumrepo['kbs-el5-rb187', 'updates'])
 		}
+		realize(Yumrepo['epel'])
 	}
 }
