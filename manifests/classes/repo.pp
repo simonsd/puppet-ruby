@@ -3,17 +3,17 @@ class ruby::repo {
 		'kbs-el5-rb187':
 			descr => "kbs-el5-rb187",
 			enabled =>1,
-			baseurl => "http://centos.karan.org/el5/ruby187/$hardwaremodel",
+			baseurl => "http://centos.karan.org/el5/ruby187/$::hardwaremodel",
 			gpgcheck =>1,
 			gpgkey => "http://centos.karan.org/RPM-GPG-KEY-karan.org.txt";
 
 		'epel':
 			descr => 'EPEL',
 			enabled => 1,
-			baseurl => $operatingsystem ? {
-				'Centos' => $operatingsystemrelease ? {
-					'5.*' => "http://mirror.eurid.eu/epel/5/$hardwaremodel/",
-					'6.0' => "http://mirror.eurid.eu/epel/6/$hardwaremodel/",
+			baseurl => $::operatingsystem ? {
+				'Centos' => $::operatingsystemrelease ? {
+					'5.*' => "http://mirror.eurid.eu/epel/5/$::hardwaremodel/",
+					'6.0' => "http://mirror.eurid.eu/epel/6/$::hardwaremodel/",
 				},
 				'Debian' => undef,
 			},
@@ -27,8 +27,8 @@ class ruby::repo {
 			gpgkey => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-5';
 	}
 
-	if $operatingsystem == 'Centos' {
-		if $operatingsystemrelease != '6.0' {
+	if $::operatingsystem == 'Centos' {
+		if $::operatingsystemrelease != '6.0' {
 			realize(Yumrepo['kbs-el5-rb187', 'updates'])
 		}
 		realize(Yumrepo['epel'])

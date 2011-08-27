@@ -8,7 +8,7 @@ class ruby (
 	$bin_dir = '/usr/bin',
 	$usecrappyhttpdmodule = 'no'
 ) {
-	if $stages != 'yes' {
+	if $ruby::stages != 'yes' {
 		class{'ruby::repo':} -> class{'ruby::packages':}
 	} else {
 		class{
@@ -19,13 +19,13 @@ class ruby (
 		}
 	}
 
-	if $operatingsystem == 'centos' {
-		if $operatingsystemrelease != '6.0' {
+	if $::operatingsystem == 'centos' {
+		if $::operatingsystemrelease != '6.0' {
 			include ruby::openssl_fix
 		}
 	}
 
-	if $usecrappyhttpdmodule == 'yes' {
+	if $ruby::usecrappyhttpdmodule == 'yes' {
 		realize(Package['httpd-devel'])
 		include passenger
 	}

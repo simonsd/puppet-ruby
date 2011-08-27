@@ -3,8 +3,8 @@ class ruby::packages {
 		ruby:
 			ensure => latest,
 			name => 'ruby',
-			require => $operatingsystem ? {
-				Centos => $operatingsystemrelease ? {
+			require => $::operatingsystem ? {
+				Centos => $::operatingsystemrelease ? {
 					'6.0' => undef,
 					'*' => Yumrepo["kbs-el5-rb187"],
 				},
@@ -13,7 +13,7 @@ class ruby::packages {
 
 		rubydevel:
 			ensure => latest,
-			name => $operatingsystem ? {
+			name => $::operatingsystem ? {
 				Centos => 'ruby-devel',
 				Debian => 'ruby-dev',
 			},
@@ -22,8 +22,8 @@ class ruby::packages {
 		rubygems:
 			ensure => installed,
 			name => 'rubygems',
-			require => $operatingsystem ? {
-				Centos => $operatingsystemrelease ? {
+			require => $::operatingsystem ? {
+				Centos => $::operatingsystemrelease ? {
 					'6.0' => Package['ruby'],
 					'*' => [ Package['ruby'], Yumrepo['epel'] ],
 				},
@@ -43,7 +43,7 @@ class ruby::packages {
 			require => Package['ruby'];
 	}
 
-	if $operatingsystem == "Centos" {
+	if $::operatingsystem == "Centos" {
 		realize(Package['rubylibs', 'rubydocs'])
 	}
 
@@ -52,7 +52,7 @@ class ruby::packages {
 		cwd => '/tmp',
 	}
 
-	if $rubyee != "" {
+	if $ruby::rubyee != "" {
 		realize(Exec['ruby enterprise'])
 	}
 }
