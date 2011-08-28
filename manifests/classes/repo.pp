@@ -10,12 +10,9 @@ class ruby::repo {
 		'epel':
 			descr => 'EPEL',
 			enabled => 1,
-			baseurl => $::operatingsystem ? {
-				'Centos' => $::operatingsystemrelease ? {
-					'5.*' => "http://mirror.eurid.eu/epel/5/$::hardwaremodel/",
-					'6.0' => "http://mirror.eurid.eu/epel/6/$::hardwaremodel/",
-				},
-				'Debian' => undef,
+			baseurl => $::operatingsystemrelease ? {
+				'5.*' => "http://mirror.eurid.eu/epel/5/$::hardwaremodel/",
+				'6.0' => "http://mirror.eurid.eu/epel/6/$::hardwaremodel/",
 			},
 			gpgcheck => 0;
 
