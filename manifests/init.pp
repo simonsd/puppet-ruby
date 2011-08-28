@@ -6,7 +6,8 @@ class ruby (
 	$home = '/usr',
 	$lib_dir = '/usr/lib64/ruby',
 	$bin_dir = '/usr/bin',
-	$usecrappyhttpdmodule = 'no'
+	$usecrappyhttpdmodule = 'no',
+	$version = '1.8'
 ) {
 	if $ruby::stages != 'yes' {
 		class {
