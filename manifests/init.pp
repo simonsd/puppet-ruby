@@ -9,7 +9,11 @@ class ruby (
 	$usecrappyhttpdmodule = 'no'
 ) {
 	if $ruby::stages != 'yes' {
-		class{'ruby::repo':} -> class{'ruby::packages':}
+		class {
+			'ruby::repo':
+				before => Class['ruby::packages'];
+			'ruby::packages':;
+		}
 	} else {
 		class{
 			'ruby::repo':
