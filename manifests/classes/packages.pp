@@ -1,5 +1,5 @@
 class ruby::packages {
-	package {
+	@package {
 		ruby:
 			ensure => latest,
 			name => 'ruby',
@@ -11,16 +11,13 @@ class ruby::packages {
 				},
 			};
 
-/*
 		rubydevel:
 			ensure => latest,
 			name => $::operatingsystem ? {
-				archlinux => undef,
-				Centos => 'ruby-devel',
+				default => 'ruby-devel',
 				Debian => 'ruby-dev',
 			},
 			require => Package['ruby'];
-*/
 
 		rubygems:
 			ensure => installed,
@@ -32,9 +29,7 @@ class ruby::packages {
 					'*' => [ Package['ruby'], Yumrepo['epel'] ],
 				},
 			};
-	}
 
-	@package {
 		rubylibs:
 			ensure => latest,
 			name => 'ruby-libs',
@@ -46,13 +41,36 @@ class ruby::packages {
 			require => Package['ruby'];
 	}
 
+	if $::operatingsystem != 'archlinux' {
+		realize(Package['ruby', 'rubydevel', 'rubygems'])
+	}
+
 	if $::operatingsystem == "Centos" {
 		realize(Package['rubylibs', 'rubydocs'])
 	}
 
-	@exec { 'ruby enterprise':
-		command => "/usr/bin/wget http://rubyforge.org/frs/download.php/71099/ruby-enterprise_1.8.7-2010.02_i386_ubuntu8.04.deb && sudo dkpg -i ruby-enterprise* && export PATH=$PATH:/opt/ruby-enterprise/bin && export LD_LIBRARY_PATH='/usr/local/lib'",
-		cwd => '/tmp',
+	@exec {
+		'ruby enterprise':
+			command => "/usr/bin/wget http://rubyforge.org/frs/download.php/71099/ruby-enterprise_1.8.7-2010.02_i386_ubuntu8.04.deb && sudo dkpg -i ruby-enterprise* && export PATH=$PATH:/opt/ruby-enterprise/bin && export LD_LIBRARY_PATH='/usr/local/lib'",
+			cwd => '/tmp';
+
+		'ruby1.8-aur':
+			command => 'yaourt -S --noconfirm ruby1.8',
+			provider => shell,
+			unless => 'yaourt -Qi ruby1.8',
+			require => Class['arch::yaourt'];
+
+		'rubygems1.8-aur':
+			command => 'yaourt -S --noconfirm rubygems1.8',
+			provider => shell,
+			unless => 'yaourt -Qi rubygems1.8',
+			require => Exec['ruby1.8-aur'];
+	}
+
+	if $::operatingsystem == 'archlinux' {
+		realize(Exec['ruby1.8-aur', 'rubygems1.8-aur'])
+# now just ensure => absent on Package['ruby', 'rubygems']
+# then symlink the ruby-1.8 and gem-1.8 binaries to the original locations
 	}
 
 	if $ruby::rubyee != "" {
