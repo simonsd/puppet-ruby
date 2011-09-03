@@ -42,8 +42,10 @@ class ruby::packages {
 	}
 
 	if $::operatingsystem != 'archlinux' {
-		realize(Package['ruby', 'rubydevel', 'rubygems'])
+		realize(Package['rubydevel', 'rubygems'])
 	}
+
+	realize(Package['ruby'])
 
 	if $::operatingsystem == "Centos" {
 		realize(Package['rubylibs', 'rubydocs'])
@@ -65,12 +67,16 @@ class ruby::packages {
 			provider => shell,
 			unless => 'yaourt -Qi rubygems1.8',
 			require => Exec['ruby1.8-aur'];
+
+		'ruby1.8_PATH':
+			command => 'sed -i \'s/^PATH=\\"/PATH=\\"\\/opt\\/ruby1.8\\/bin:/\' /etc/profile',
+			unless => 'grep \'^PATH="/opt/ruby1.8/bin:\' /etc/profile',
+			provider => shell,
+			require => Exec['ruby1.8-aur'];
 	}
 
 	if $::operatingsystem == 'archlinux' {
-		realize(Exec['ruby1.8-aur', 'rubygems1.8-aur'])
-# now just ensure => absent on Package['ruby', 'rubygems']
-# then symlink the ruby-1.8 and gem-1.8 binaries to the original locations
+		realize(Exec['ruby1.8-aur', 'rubygems1.8-aur', 'ruby1.8_PATH'])
 	}
 
 	if $ruby::rubyee != "" {
