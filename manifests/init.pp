@@ -3,12 +3,21 @@ import 'definitions/*'
 
 class ruby (
 	$stages = 'no',
-	$home = '/usr',
-	$lib_dir = $::hardwaremodel ? {
-		default => '/usr/lib/ruby',
-		x86_64 => '/usr/lib64/ruby',
+	$home = $::operatingsystem ? {
+		default => '/usr',
+		archlinux => '/opt/ruby1.8',
 	},
-	$bin_dir = '/usr/bin',
+	$lib_dir = $::operatingystem ? {
+		default => $::hardwaremodel ? {
+			default => '/usr/lib/ruby',
+			x86_64 => '/usr/lib64/ruby',
+		},
+		archlinux => '/opt/ruby1.8/lib/ruby',
+	},
+	$bin_dir = $::operatingsystem ? {
+		default => '/usr/bin',
+		archlinux => '/opt/ruby/bin',
+	},
 	$usecrappyhttpdmodule = 'no',
 	$version = '1.8'
 ) {
