@@ -7,7 +7,7 @@ class ruby (
 		default => '/usr',
 		archlinux => '/opt/ruby1.8',
 	},
-	$lib_dir = $::operatingystem ? {
+	$lib_dir = $::operatingsystem ? {
 		default => $::hardwaremodel ? {
 			default => '/usr/lib/ruby',
 			x86_64 => '/usr/lib64/ruby',
