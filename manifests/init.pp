@@ -16,7 +16,7 @@ class ruby (
 	},
 	$bin_dir = $::operatingsystem ? {
 		default => '/usr/bin',
-		archlinux => '/opt/ruby/bin',
+		archlinux => '/opt/ruby1.8/bin',
 	},
 	$usecrappyhttpdmodule = 'no',
 	$version = '1.8'
