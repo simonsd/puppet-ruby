@@ -13,6 +13,7 @@ class ruby (
 			x86_64 => '/usr/lib64/ruby',
 		},
 		archlinux => '/opt/ruby1.8/lib/ruby',
+		debian => '/var/lib',
 	},
 	$bin_dir = $::operatingsystem ? {
 		default => '/usr/bin',
