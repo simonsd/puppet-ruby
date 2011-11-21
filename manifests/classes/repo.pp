@@ -3,6 +3,6 @@ class ruby::repo {
 		if $::operatingsystemrelease != '6.0' {
 			realize(Yumrepo['kbs-el5-rb187', 'updates'])
 		}
-		realize(Yumrepo['epel'])
+		realize(Yumrepo['epel'], File['epel-gpg-key'])
 	}
 }
