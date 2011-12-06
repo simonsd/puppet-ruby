@@ -8,10 +8,7 @@ class ruby (
 		archlinux => '/opt/ruby1.8',
 	},
 	$lib_dir = $::operatingsystem ? {
-		default => $::hardwaremodel ? {
-			default => '/usr/lib/ruby',
-			x86_64 => '/usr/lib64/ruby',
-		},
+		default => '/usr/lib/ruby',
 		archlinux => '/opt/ruby1.8/lib/ruby',
 		debian => '/var/lib',
 	},
