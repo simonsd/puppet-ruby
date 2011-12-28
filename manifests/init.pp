@@ -10,10 +10,6 @@ class ruby (
 	$lib_dir = $::operatingsystem ? {
 		default => '/usr/lib/ruby',
 		archlinux => '/opt/ruby1.8/lib/ruby',
-		centos => $::architecture ? {
-			'x86_64' => '/usr/lib64/ruby',
-			default => '/usr/lib/ruby',
-		},
 		debian => '/var/lib',
 	},
 	$bin_dir = $::operatingsystem ? {
