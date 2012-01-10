@@ -5,8 +5,8 @@ class ruby::packages {
 			name => 'ruby',
 			require => $::operatingsystem ? {
 				default => undef,
-				Centos => $::lsbmajdistrelease ? {
-					'6' => undef,
+				Centos => $::operatingsystemrelease ? {
+					/^6/ => undef,
 					default => Yumrepo["kbs-el5-rb187"],
 				},
 			};
@@ -24,8 +24,8 @@ class ruby::packages {
 			name => 'rubygems',
 			require => $::operatingsystem ? {
 				default => Package['ruby'],
-				Centos => $::lsbmajdistrelease ? {
-					'6' => Package['ruby'],
+				Centos => $::operatingsystemrelease ? {
+					/^6/ => Package['ruby'],
 					default => [ Package['ruby'], Yumrepo['epel'] ],
 				},
 			};
