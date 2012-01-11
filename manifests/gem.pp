@@ -1,4 +1,4 @@
-define gem (
+define ruby::gem (
 	$name,
 	$version = 'latest'
 ) {

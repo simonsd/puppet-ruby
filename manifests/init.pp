@@ -1,5 +1,3 @@
-import 'definitions/*'
-
 class ruby (
 	$stages = 'no',
 	$home = $::operatingsystem ? {
