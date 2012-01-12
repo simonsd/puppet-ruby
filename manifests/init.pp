@@ -31,7 +31,7 @@ class ruby (
     }
 
     if $::operatingsystem == 'centos' {
-      if $::operatingsystemrelease != '6.0' {
+      if $::operatingsystemrelease =~ /^5/ {
         include ruby::openssl_fix
       }
     }
