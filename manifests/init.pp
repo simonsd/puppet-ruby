@@ -19,20 +19,10 @@ class ruby (
 
 ) {
 
-  if $ruby::stages != 'yes' {
     if $ruby::managerepo {
       include ruby::repo
     }
     include ruby::packages
-    Class['ruby::repo'] -> Class['ruby::packages']
-  } else {
-      class { 'ruby::repo':
-          stage => 'repo',
-      }
-      class { 'ruby::packages':
-          stage => 'depends',
-      }
-    }
 
     if $::operatingsystem == 'centos' {
       if $::operatingsystemrelease =~ /^5/ {
