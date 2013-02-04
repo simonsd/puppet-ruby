@@ -63,8 +63,8 @@ class ruby::packages {
       cwd     => '/tmp';
 
     'ruby1.8_PATH':
-      command  => 'sed -i \'s/^PATH=\\"/PATH=\\"\\/opt\\/ruby1.8\\/bin:/\' /etc/profile',
-      unless   => 'grep \'^PATH="/opt/ruby1.8/bin:\' /etc/profile',
+      command  => 'sed -i \'s/^PATH=\\"/PATH=\\"\\/root\\/.gem\\/ruby\\/1.8\\/bin:/\' /etc/profile',
+      unless   => 'grep \'^PATH="/root/.gem/ruby/1.8/bin:\' /etc/profile',
       provider => shell;
   }
 
