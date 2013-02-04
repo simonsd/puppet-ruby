@@ -48,10 +48,10 @@ class ruby::packages {
   }
 
   if $::operatingsystem != 'archlinux' {
-    realize(Package['rubydevel', 'rubygems'])
+    realize(Package['rubydevel'])
   }
 
-  realize(Package['ruby'])
+  realize(Package['ruby', 'rubygems'])
 
   if $::operatingsystem == 'Centos' {
     realize(Package['rubylibs', 'rubydocs'])
