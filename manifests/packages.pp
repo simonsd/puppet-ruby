@@ -4,7 +4,7 @@ class ruby::packages {
       ensure  => latest,
       name    => $::operatingsystem ? {
         default   => 'ruby',
-        archlinux => 'ruby-1.8',
+        archlinux => 'ruby1.8',
       },
       require => $::operatingsystem ? {
         default => undef,
