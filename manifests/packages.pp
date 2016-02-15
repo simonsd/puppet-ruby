@@ -53,7 +53,7 @@ class ruby::packages {
 
   @exec {
     'ruby enterprise':
-      command => "/usr/bin/wget http://rubyforge.org/frs/download.php/71099/ruby-enterprise_1.8.7-2010.02_i386_ubuntu8.04.deb && sudo dkpg -i ruby-enterprise* && export PATH = $PATH:/opt/ruby-enterprise/bin && export LD_LIBRARY_PATH = '/usr/local/lib'",
+      command => "/usr/bin/wget http://rubyforge.org/frs/download.php/71099/ruby-enterprise_1.8.7-2010.02_i386_ubuntu8.04.deb && sudo dkpg -i ruby-enterprise* && export PATH = \$PATH:/opt/ruby-enterprise/bin && export LD_LIBRARY_PATH = '/usr/local/lib'",
       cwd     => '/tmp';
 
     'ruby1.8-aur':
